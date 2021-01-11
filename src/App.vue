@@ -1,28 +1,60 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <header>
+      <div class="container">
+        <p>Книга контактов</p>
+      </div>
+    </header>
+    <router-view v-bind:contacts="contacts" />
   </div>
 </template>
-
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "PageOne",
+  data() {
+    return {
+      contacts: [
+        {
+          id: 1,
+          name: "Michael Bay",
+          email: "test@gmail.com",
+          phone: "+79155515912",
+        },
+        {
+          id: 2,
+          name: "Test Testovich",
+          email: "test@gmail.com",
+          phone: "+79155511234",
+        },
+      ],
+    };
+  },
+};
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss" scoped>
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+header {
+  width: 100%;
+  background: #282c34;
+}
+body {
+  background: #282c34;
+}
+.container {
+  width: 90%;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  background: #32363e;
+  color: #61dafb;
+  font-size: 5em;
+  font-family: "Roboto", sans-serif;
+  p {
+    margin: 0;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px;
+  }
 }
 </style>
