@@ -17,6 +17,12 @@ export default {
       JSON.stringify([
         { id: 0, name: "Gay hay", phone: "+12345455" },
         { id: 1, name: "Rah Jay", phone: "5436346" },
+        { id: 2, name: "Gay hay", phone: "+12345455" },
+        { id: 3, name: "Rah Jay", phone: "54363342446" },
+        { id: 4, name: "Gay hay", phone: "+12345455" },
+        { id: 5, name: "Rah Jay", phone: "5436346" },
+        { id: 6, name: "Gay hay", phone: "+12345455" },
+        { id: 7, name: "Rah Jay", phone: "5436346" },
       ])
     );
   },

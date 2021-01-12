@@ -22,13 +22,16 @@ export default {
   },
   methods: {
     deleteContact(id) {
-      console.log(id);
-      this.contacts = this.contacts.filter((c) => c.id !== 1);
+      console.log("Returned id: ", id);
+      this.contacts = this.contacts.filter((contact) => {
+        return contact.id !== Number(id);
+      });
+      console.log("after deletion ", this.contacts);
     },
   },
   watch: {
     contacts: function(b) {
-      console.log(b);
+      console.log("Watchers function ", b);
       localStorage["contacts"] = JSON.stringify(b);
     },
   },

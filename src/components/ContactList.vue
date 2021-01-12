@@ -4,6 +4,7 @@
       v-for="contact in contacts"
       v-bind:contact="contact"
       v-bind:id="contact.id"
+      @deleteContact="deleteContact"
       :key="contact.id"
     />
   </div>
@@ -16,6 +17,11 @@ export default {
   components: { Contact },
   props: {
     contacts: Array,
+  },
+  methods: {
+    deleteContact(id) {
+      this.$emit("deleteContact", id);
+    },
   },
 };
 </script>

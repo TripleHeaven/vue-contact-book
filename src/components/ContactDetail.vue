@@ -1,6 +1,8 @@
 <template>
   <div class="dick">
+    <a href="/ContactsPage">Назад к контактам</a>
     {{ this.contacts[getIdOfCurrentContact()] }}
+
     <div @click="deleteContact()">Delete Contact</div>
 
     <input id="fieldToAdd" class="addField" type="text" />
@@ -17,7 +19,8 @@ export default {
   },
   methods: {
     deleteContact() {
-      this.$emit("deleteContact", this.a);
+      console.log("This ID ", this.id);
+      this.$emit("deleteContact", this.id);
     },
     addField() {
       // const textToAdd = document.getElementById("fieldToAdd").value;
