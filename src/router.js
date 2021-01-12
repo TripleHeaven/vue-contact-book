@@ -15,7 +15,7 @@ export default new Router ({
     component: WelcomePage ,
   },
   {path: '/ContactsPage',
-component : PageOne},
+component : PageOne, props: true,},
 {
   path: '/ContactsPage/:id',
   component: ContactDetail ,

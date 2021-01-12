@@ -1,7 +1,10 @@
 <template>
   <div>
     <AddContact></AddContact>
-    <ContactList v-bind:contacts="contacts"></ContactList>
+    <ContactList
+      v-bind:contacts="contacts"
+      @deleteContact="deleteContact"
+    ></ContactList>
   </div>
 </template>
 
@@ -15,6 +18,13 @@ export default {
     contacts: {
       type: Array,
       required: true,
+    },
+  },
+  methods: {
+    deleteContact(id, name) {
+      if (confirm(`Вы действительно хотите удалить контакт? ${name}`)) {
+        this.$emit("deleteContact", id);
+      }
     },
   },
 };

@@ -5,7 +5,12 @@
         <p>Книга контактов</p>
       </div>
     </header>
-    <router-view @deleteContact="deleteContact" v-bind:contacts="contacts" />
+    <router-view
+      @addField="addField"
+      @deleteContact="deleteContact"
+      @deleteField="deleteField"
+      v-bind:contacts="contacts"
+    />
   </div>
 </template>
 <script>
@@ -26,12 +31,19 @@ export default {
       this.contacts = this.contacts.filter((contact) => {
         return contact.id !== Number(id);
       });
-      console.log("after deletion ", this.contacts);
+    },
+    addField(index, fieldToAdd, valueOfNewField) {
+      this.contacts[index[0]][fieldToAdd] = valueOfNewField;
+      this.contacts = this.contacts.slice(0, this.contacts.length);
+    },
+    deleteField(index, fieldToDelete) {
+      console.log(index, fieldToDelete);
+      delete this.contacts[index[0]][fieldToDelete];
+      this.contacts = this.contacts.slice(0, this.contacts.length);
     },
   },
   watch: {
     contacts: function(b) {
-      console.log("Watchers function ", b);
       localStorage["contacts"] = JSON.stringify(b);
     },
   },

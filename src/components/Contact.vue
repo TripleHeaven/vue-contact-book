@@ -4,6 +4,7 @@
     <a :href="`/ContactsPage/` + id"
       ><button>Переход на контактную информацию</button></a
     >
+    <div class="deleteButton" @click="deleteContact()">Удалить</div>
   </div>
 </template>
 
@@ -13,6 +14,12 @@ export default {
   props: {
     id: Number,
     contact: Object,
+  },
+  methods: {
+    deleteContact() {
+      const name = this.contact.name;
+      this.$emit("deleteContact", this.id, name);
+    },
   },
 };
 </script>
