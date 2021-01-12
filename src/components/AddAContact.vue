@@ -4,18 +4,11 @@
       <div class="formTbs">
         <label htmlFor="name">Name</label>
         <input type="text" id="name" class="inputInfo" />
-        <label htmlFor="email">Email</label>
-        <input type="text" id="email" class="inputInfo" />
-        <label htmlFor="password">Password</label>
-        <input type="text" id="password" class="inputInfo" />
         <label htmlFor="phone">Phone</label>
         <input type="text" id="phone" class="inputInfo" />
       </div>
     </form>
-    <div class="errorBlock">
-      <div class="errorStatus">{errorText}</div>
-    </div>
-    <button class="buttonitselfonClick">
+    <button @click="addContact" class="buttonitselfonClick">
       Add user
     </button>
   </div>
@@ -23,7 +16,24 @@
 
 <script>
 export default {
-  name: "AddContact",
+  name: "AddAContact",
+  methods: {
+    addContact() {
+      if (
+        document.getElementById("name").value.length !== 0 &&
+        document.getElementById("phone").value.length !== 0
+      ) {
+        this.$emit(
+          "addContact",
+          document.getElementById("name").value.length,
+          document.getElementById("phone").value.length
+        );
+      } else {
+        console.log(document.getElementById("name").value.length);
+        console.log(document.getElementById("phone").value.length);
+      }
+    },
+  },
 };
 </script>
 

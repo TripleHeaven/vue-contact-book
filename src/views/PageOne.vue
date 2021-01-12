@@ -1,19 +1,20 @@
 <template>
   <div>
-    <AddContact></AddContact>
+    <AddAContact @addContact="addContact"></AddAContact>
     <ContactList
       v-bind:contacts="contacts"
       @deleteContact="deleteContact"
+      @addContact="addContact"
     ></ContactList>
   </div>
 </template>
 
 <script>
-import AddContact from "../components/AddContact.vue";
+import AddAContact from "../components/AddAContact.vue";
 import ContactList from "../components/ContactList.vue";
 export default {
   name: "PageOne",
-  components: { AddContact, ContactList },
+  components: { AddAContact, ContactList },
   props: {
     contacts: {
       type: Array,
@@ -25,6 +26,13 @@ export default {
       if (confirm(`Вы действительно хотите удалить контакт? ${name}`)) {
         this.$emit("deleteContact", id);
       }
+    },
+    addContact() {
+      this.$emit(
+        "addContact",
+        document.getElementById("name").value.length,
+        document.getElementById("phone").value.length
+      );
     },
   },
 };
