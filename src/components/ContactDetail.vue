@@ -34,6 +34,9 @@
         >
           Отменить изменения
         </button>
+        <button @click="deleteField(field)" class="delField">
+          Удалить поле
+        </button>
       </div>
       <button class="cancelLastAction" @click="cancelLastChange()">
         Отменить последнее действие
@@ -97,32 +100,28 @@ export default {
       ) {
         alert("Данное поле уже присутствует у данного контакта!");
       } else {
+        this.rememberLastAction(null, "add", add[0], add[1]);
         this.$emit("addField", this.getIdOfCurrentContact(), add[0], add[1]);
       }
     },
-    deleteField() {
-      const add = document
-        .getElementById("fieldtoDelete")
-        .value.replace(/ /g, "");
-      if (add.length === 0) {
-        alert("Вы ввели пустое поле");
-      } else if (add === "id") {
+    deleteField(field) {
+      if (field.fieldName === "id") {
         alert("Данное поле зарезервировано и его нельзя удалить");
-      } else if (add === "id") {
+      } else if (field.fieldName === "id") {
         alert("Поле Имя нельзя удалить");
       } else {
-        if (
-          Object.prototype.hasOwnProperty.call(
-            this.contacts[this.getIdOfCurrentContact()],
-            add
-          )
-        ) {
-          this.$emit("deleteField", this.getIdOfCurrentContact(), add);
-        } else {
-          console.log("it doesnt exist");
-        }
+        this.rememberLastAction(
+          field.fieldIndex,
+          "delete",
+          field.fieldName,
+          field.fieldValue
+        );
+        this.$emit(
+          "deleteField",
+          this.getIdOfCurrentContact(),
+          field.fieldName
+        );
       }
-      console.log(add);
       // this.$emit("deleteField", this.getIdOfCurrentContact(), add);
     },
     getIdOfCurrentContact() {
@@ -178,6 +177,21 @@ export default {
           this.getIdOfCurrentContact(),
           this.changedField.name,
           this.changedField.value
+        );
+      }
+      if (this.lastAction === "delete") {
+        this.$emit(
+          "addField",
+          this.getIdOfCurrentContact(),
+          this.changedField.name,
+          this.changedField.value
+        );
+      }
+      if (this.lastAction === "add") {
+        this.$emit(
+          "deleteField",
+          this.getIdOfCurrentContact(),
+          this.changedField.name
         );
       }
     },
