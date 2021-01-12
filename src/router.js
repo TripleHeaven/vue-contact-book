@@ -3,7 +3,7 @@ import Router from 'vue-router';
 
 import WelcomePage from "./views/WelcomePage";
 import PageOne from "./views/PageOne";
-import Test from './components/Test';
+import ContactDetail from './components/ContactDetail';
 Vue.use(Router);
 
 
@@ -18,7 +18,7 @@ export default new Router ({
 component : PageOne},
 {
   path: '/ContactsPage/:id',
-  component: Test ,
+  component: ContactDetail ,
   props: true,
 },]
 })

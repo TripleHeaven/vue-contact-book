@@ -9,7 +9,19 @@
     <a href="/ContactsPage">К заданию! </a>
   </div>
 </template>
-
+<script>
+export default {
+  mounted() {
+    localStorage.setItem(
+      "contacts",
+      JSON.stringify([
+        { id: 0, name: "Gay hay", phone: "+12345455" },
+        { id: 1, name: "Rah Jay", phone: "5436346" },
+      ])
+    );
+  },
+};
+</script>
 <style lang="scss">
 html,
 body {

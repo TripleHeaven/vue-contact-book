@@ -5,29 +5,32 @@
         <p>Книга контактов</p>
       </div>
     </header>
-    <router-view v-bind:contacts="contacts" />
+    <router-view @deleteContact="deleteContact" v-bind:contacts="contacts" />
   </div>
 </template>
 <script>
 export default {
-  name: "PageOne",
+  name: "Main",
   data() {
     return {
-      contacts: [
-        {
-          id: 1,
-          name: "Michael Bay",
-          email: "test@gmail.com",
-          phone: "+79155515912",
-        },
-        {
-          id: 2,
-          name: "Test Testovich",
-          email: "test@gmail.com",
-          phone: "+79155511234",
-        },
-      ],
+      contacts: [],
     };
+  },
+  mounted() {
+    console.log("IM MOUNTED", Date.now());
+    this.contacts = JSON.parse(localStorage.contacts);
+  },
+  methods: {
+    deleteContact(id) {
+      console.log(id);
+      this.contacts = this.contacts.filter((c) => c.id !== 1);
+    },
+  },
+  watch: {
+    contacts: function(b) {
+      console.log(b);
+      localStorage["contacts"] = JSON.stringify(b);
+    },
   },
 };
 </script>
