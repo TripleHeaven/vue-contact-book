@@ -9,6 +9,7 @@
       @addField="addField"
       @deleteContact="deleteContact"
       @deleteField="deleteField"
+      @changeField="changeField"
       v-bind:contacts="contacts"
     />
   </div>
@@ -39,6 +40,10 @@ export default {
     deleteField(index, fieldToDelete) {
       console.log(index, fieldToDelete);
       delete this.contacts[index[0]][fieldToDelete];
+      this.contacts = this.contacts.slice(0, this.contacts.length);
+    },
+    changeField(index, changedField, newValue) {
+      this.contacts[index][changedField] = newValue;
       this.contacts = this.contacts.slice(0, this.contacts.length);
     },
   },

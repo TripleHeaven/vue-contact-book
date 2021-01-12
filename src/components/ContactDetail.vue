@@ -3,13 +3,43 @@
     <a href="/ContactsPage">Назад к контактам</a>
     <!-- {{ this.a }} -->
     <div class="params">
-      <input
-        type="text"
-        v-for="field in fields"
-        :key="field.fieldName"
-        v-bind:value="field.fieldValue"
-      />
+      <div v-for="field in fields" :key="field.fieldName" class="oneParam">
+        {{ field.fieldName }}
+        <input
+          type="text"
+          v-bind:value="field.fieldValue"
+          v-bind:id="field.fieldName"
+          disabled
+        />
+
+        <button
+          v-if="!field.isRedactMode"
+          class="tgglredactButton"
+          @click="openRedactMode(field)"
+        >
+          Редактировать
+        </button>
+        <!-- hidden buttons -->
+        <button
+          @click="confirmChange(field)"
+          v-if="field.isRedactMode"
+          class="completeRedact"
+        >
+          Подтвердить изменения
+        </button>
+        <button
+          v-if="field.isRedactMode"
+          @click="cancelChange(field)"
+          class="cancelRedact"
+        >
+          Отменить изменения
+        </button>
+      </div>
+      <button class="cancelLastAction" @click="cancelLastChange()">
+        Отменить последнее действие
+      </button>
     </div>
+
     <input id="fieldToAdd" class="addField" type="text" />
     <div @click="addField()">Добавить поле</div>
     <input id="fieldtoDelete" class="deleteField" type="text" />
@@ -28,16 +58,24 @@ export default {
     return {
       contact: [],
       fields: [],
+      lastChangedIndex: -1,
+      lastAction: "none",
+      changedField: {},
     };
   },
   watch: {
     contacts() {
       this.contact = this.contacts[this.getIdOfCurrentContact()];
+      this.fields = [];
+      let index = 0;
       for (const propertyName in this.contact) {
         this.fields.push({
           fieldName: propertyName,
           fieldValue: this.contact[propertyName],
+          isRedactMode: false,
+          fieldIndex: index,
         });
+        index += 1;
       }
     },
   },
@@ -92,6 +130,55 @@ export default {
         if (this.contacts[i].id == this.id) {
           return [i];
         }
+      }
+    },
+    openRedactMode(field) {
+      document.getElementById(field.fieldName).disabled = false;
+      field.isRedactMode = true;
+    },
+    cancelChange(field) {
+      document.getElementById(field.fieldName).disabled = true;
+      field.isRedactMode = false;
+    },
+    rememberLastAction(
+      fieldIndex,
+      action,
+      changedFieldName,
+      changedFieldValue
+    ) {
+      this.lastChangedIndex = fieldIndex;
+      this.lastAction = action;
+      this.changedField.value = changedFieldValue;
+      this.changedField.name = changedFieldName;
+    },
+    confirmChange(field) {
+      if (console.log(document.getElementById(field.fieldName).value) !== "") {
+        this.rememberLastAction(
+          field.fieldIndex,
+          "edit",
+          field.fieldName,
+          field.fieldValue
+        );
+        field.fieldValue = document.getElementById(field.fieldName).value;
+        document.getElementById(field.fieldName).isRedactMode = false;
+
+        this.$emit(
+          "changeField",
+          this.getIdOfCurrentContact(),
+          field.fieldName,
+          field.fieldValue
+        );
+      }
+    },
+    cancelLastChange() {
+      // edit cancel
+      if (this.lastAction === "edit") {
+        this.$emit(
+          "changeField",
+          this.getIdOfCurrentContact(),
+          this.changedField.name,
+          this.changedField.value
+        );
       }
     },
   },
