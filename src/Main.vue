@@ -28,8 +28,8 @@ export default {
     };
   },
   mounted() {
-    // Получаем контакты из localstorage
-    this.contacts = JSON.parse(localStorage.contacts);
+    // Получаем контакты из sessionStorage
+    this.contacts = JSON.parse(sessionStorage.contacts);
   },
   methods: {
     // функции для обработки контактов
@@ -61,9 +61,9 @@ export default {
     },
   },
   watch: {
-    // любые изменения в контактах заносятся в localStorage
+    // любые изменения в контактах заносятся в sessionStorage
     contacts: function(b) {
-      localStorage["contacts"] = JSON.stringify(b);
+      sessionStorage["contacts"] = JSON.stringify(b);
     },
   },
 };

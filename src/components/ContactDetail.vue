@@ -258,7 +258,6 @@ export default {
 }
 
 .parameters {
-  display: flex;
   padding: 2px;
   font-family: "Roboto";
   .parName {

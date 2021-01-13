@@ -3,7 +3,7 @@
     <span>Книга контактов с использованием local storage</span>
     <img src="../assets/pika.png" />
     <span
-      >При переходе на данную страницу в local storage записывается базовый
+      >При переходе на данную страницу в sessionStorage записывается базовый
       список контактов</span
     >
     <br />
@@ -21,7 +21,7 @@ export default {
   mounted() {
     // Данная страница выполняет функции начальной настройки приложения
     // и записывает начальный список контактов в localStorage
-    localStorage.setItem(
+    sessionStorage.setItem(
       "contacts",
       JSON.stringify([
         { id: 0, name: "Валентин Тарасов", phone: "+74950219729" },
