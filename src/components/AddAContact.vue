@@ -3,9 +3,9 @@
     <form>
       <div class="formTbs">
         <label htmlFor="name">Name</label>
-        <input type="text" id="name" class="inputInfo" />
+        <input type="text" id="nameForAdd" class="inputInfo" />
         <label htmlFor="phone">Phone</label>
-        <input type="text" id="phone" class="inputInfo" />
+        <input type="text" id="phoneForAdd" class="inputInfo" />
       </div>
     </form>
     <button @click="addContact" class="buttonitselfonClick">
@@ -20,17 +20,18 @@ export default {
   methods: {
     addContact() {
       if (
-        document.getElementById("name").value.length !== 0 &&
-        document.getElementById("phone").value.length !== 0
+        document.getElementById("nameForAdd").value.length !== 0 &&
+        document.getElementById("phoneForAdd").value.length !== 0
       ) {
         this.$emit(
           "addContact",
-          document.getElementById("name").value.length,
-          document.getElementById("phone").value.length
+          document.getElementById("nameForAdd").value,
+          document.getElementById("phoneForAdd").value
         );
       } else {
-        console.log(document.getElementById("name").value.length);
-        console.log(document.getElementById("phone").value.length);
+        alert("Пожалуйста, заполните все поля!");
+        (document.getElementById("nameForAdd").value = ""),
+          (document.getElementById("phoneForAdd").value = "");
       }
     },
   },

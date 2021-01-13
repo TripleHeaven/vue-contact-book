@@ -43,12 +43,9 @@ export default {
         this.$emit("deleteContact", id);
       }
     },
-    addContact() {
-      this.$emit(
-        "addContact",
-        document.getElementById("name").value.length,
-        document.getElementById("phone").value.length
-      );
+    addContact(name, phone) {
+      alert(name);
+      this.$emit("addContact", name, phone);
     },
   },
 };
