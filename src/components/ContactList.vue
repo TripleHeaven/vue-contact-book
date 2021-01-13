@@ -20,8 +20,8 @@ export default {
     contacts: Array,
   },
   methods: {
-    deleteContact(id) {
-      this.$emit("deleteContact", id);
+    deleteContact(id, name) {
+      this.$emit("deleteContact", id, name);
     },
   },
 };

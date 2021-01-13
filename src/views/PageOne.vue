@@ -39,7 +39,7 @@ export default {
       this.$emit("alphabetSort");
     },
     deleteContact(id, name) {
-      if (confirm(`Вы действительно хотите удалить контакт? ${name}`)) {
+      if (confirm(`Вы действительно хотите удалить контакт ${name}?`)) {
         this.$emit("deleteContact", id);
       }
     },

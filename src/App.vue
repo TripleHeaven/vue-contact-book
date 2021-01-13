@@ -33,7 +33,6 @@ export default {
       this.contacts = this.contacts.slice(0, this.contacts.length);
     },
     deleteContact(id) {
-      console.log("Returned id: ", id);
       this.contacts = this.contacts.filter((contact) => {
         return contact.id !== Number(id);
       });
@@ -52,7 +51,6 @@ export default {
       this.contacts = this.contacts.slice(0, this.contacts.length);
     },
     addContact(name, phone) {
-      alert("gay");
       this.contacts.push({ id: Date.now(), name, phone });
       this.contacts = this.contacts.slice(0, this.contacts.length);
     },

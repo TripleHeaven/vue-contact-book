@@ -105,12 +105,7 @@ export default {
         alert("Поле заполнено неверно!");
       } else if (add[0] === "id") {
         alert("Данное поле зарезервировано");
-      } else if (
-        Object.prototype.hasOwnProperty.call(
-          this.contacts[this.getIdOfCurrentContact()],
-          add
-        )
-      ) {
+      } else if (Object.prototype.hasOwnProperty.call(this.contact, add[0])) {
         alert("Данное поле уже присутствует у данного контакта!");
       } else {
         this.rememberLastAction(null, "add", add[0], add[1]);
@@ -122,7 +117,7 @@ export default {
         alert("Данное поле зарезервировано и его нельзя удалить");
       } else if (field.fieldName === "id") {
         alert("Поле Имя нельзя удалить");
-      } else {
+      } else if (confirm("Вы действительно хотите удалить это поле?")) {
         this.rememberLastAction(
           field.fieldIndex,
           "delete",
@@ -149,8 +144,10 @@ export default {
       field.isRedactMode = true;
     },
     cancelChange(field) {
-      document.getElementById(field.fieldName).disabled = true;
-      field.isRedactMode = false;
+      if (confirm("Вы действительно хотите отменить редактирование?")) {
+        document.getElementById(field.fieldName).disabled = true;
+        field.isRedactMode = false;
+      }
     },
     rememberLastAction(
       fieldIndex,
@@ -164,7 +161,7 @@ export default {
       this.changedField.name = changedFieldName;
     },
     confirmChange(field) {
-      if (console.log(document.getElementById(field.fieldName).value) !== "") {
+      if (document.getElementById(field.fieldName).value !== "") {
         this.rememberLastAction(
           field.fieldIndex,
           "edit",
@@ -180,6 +177,8 @@ export default {
           field.fieldName,
           field.fieldValue
         );
+      } else {
+        alert("Поле не может быть пустым!");
       }
     },
     cancelLastChange() {
@@ -278,8 +277,5 @@ export default {
   button {
     background: #15a300;
   }
-}
-.delField {
-  background: red;
 }
 </style>
