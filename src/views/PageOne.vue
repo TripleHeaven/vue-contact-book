@@ -1,21 +1,23 @@
 <template>
-  <div class="pageContainer">
-    <div class="addContactContainer">
-      <AddAContact @addContact="addContact"></AddAContact>
-    </div>
-
-    <div class="contactListContainer">
-      <div class="labelBlock">
-        <span>Список контактов</span>
-        <button class="sortButton" @click="alphabetSort">
-          Сортировать по алфавиту
-        </button>
+  <div class="wrapper">
+    <div class="pageContainer">
+      <div class="addContactContainer">
+        <AddAContact @addContact="addContact"></AddAContact>
       </div>
-      <ContactList
-        v-bind:contacts="contacts"
-        @deleteContact="deleteContact"
-        @addContact="addContact"
-      ></ContactList>
+
+      <div class="contactListContainer">
+        <div class="labelBlock">
+          <span>Список контактов</span>
+          <button class="sortButton" @click="alphabetSort">
+            Сортировать по алфавиту
+          </button>
+        </div>
+        <ContactList
+          v-bind:contacts="contacts"
+          @deleteContact="deleteContact"
+          @addContact="addContact"
+        ></ContactList>
+      </div>
     </div>
   </div>
 </template>
@@ -56,8 +58,17 @@ html,
 body {
   margin: 0;
 }
+.wrapper {
+  background: #32363e;
+  height: 100vh;
+  width: 90%;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
 .labelBlock {
   display: flex;
+  padding-left: 10px;
   span {
     font-family: "Roboto", sans-serif;
     font-size: 24px;
@@ -65,7 +76,10 @@ body {
 }
 .pageContainer {
   display: flex;
-  width: 90%;
+  width: 100%;
+  max-height: 510px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
   margin-left: auto;
   margin-right: auto;
   justify-content: space-between;
@@ -73,11 +87,32 @@ body {
 }
 .contactListContainer {
   width: 100%;
-
+  padding: 10px;
   height: 500px;
   padding-left: 5px;
-
+  padding-right: 5px;
   font-weight: 500;
   font-size: 20px;
+}
+.sortButton {
+  margin-left: 30px;
+  background-color: rgb(21, 163, 0);
+  height: 100%;
+  padding: 5px;
+}
+@media only screen and (max-width: 1200px) {
+  .pageContainer {
+    flex-direction: column;
+    min-height: 650px;
+  }
+  @media only screen and (max-width: 1000px) {
+    .pageContainer {
+      min-width: 817px;
+      width: 100%;
+    }
+    .wrapper {
+      width: 100%;
+    }
+  }
 }
 </style>

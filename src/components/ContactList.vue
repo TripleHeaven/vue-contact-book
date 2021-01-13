@@ -34,6 +34,8 @@ export default {
   overflow: scroll;
   overflow-x: hidden;
   height: 92%;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 .contactListCont::-webkit-scrollbar {
   width: 7px; /* ширина для вертикального скролла */
@@ -42,5 +44,10 @@ export default {
 .contactListCont::-webkit-scrollbar-thumb {
   background-color: #0069ed;
   border-radius: 9em;
+}
+@media only screen and (max-width: 1200px) {
+  .contactListCont {
+    margin-right: 10px;
+  }
 }
 </style>

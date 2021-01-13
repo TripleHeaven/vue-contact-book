@@ -79,15 +79,22 @@ body {
   margin-left: auto;
   margin-right: auto;
   background: #32363e;
-  color: #61dafb;
-  font-size: 42px;
+
+  font-size: 32px;
   font-family: "Roboto", sans-serif;
+
   p {
     margin: 0;
     display: flex;
     margin-left: auto;
     margin-right: auto;
     padding: 15px;
+    color: #fff;
+  }
+}
+@media only screen and (max-width: 1000px) {
+  .container {
+    width: 100%;
   }
 }
 </style>
