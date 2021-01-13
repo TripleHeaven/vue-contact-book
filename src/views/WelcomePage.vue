@@ -20,7 +20,7 @@
 export default {
   mounted() {
     // Данная страница выполняет функции начальной настройки приложения
-    // и записывает начальный список контактов в localStorage
+    // и записывает начальный список контактов в sessionStorage
     sessionStorage.setItem(
       "contacts",
       JSON.stringify([
