@@ -1,7 +1,13 @@
 <template>
   <div class="welcomeContainer">
-    <span>Тестовое задание на позицию Frontend-Developer</span>
+    <span>Книга контактов с использованием local storage</span>
     <img src="../assets/pika.png" />
+    <span
+      >При переходе на данную страницу в local storage записывается базовый
+      список контактов</span
+    >
+    <br />
+    <br />
     <span
       >Если у вас что-то не запустилось или вылезла какая-то ошибка, будьте
       добры, напишите мне на почту: geroy1219@gmail.com</span
@@ -23,6 +29,12 @@ export default {
         { id: 5, name: "Rah Jay", phone: "5436346" },
         { id: 6, name: "Gay hay", phone: "+12345455" },
         { id: 7, name: "Rah Jay", phone: "5436346" },
+        { id: 8, name: "Test 1", phone: "5436346" },
+        { id: 9, name: "Rah Jay", phone: "5436346" },
+        { id: 10, name: "Rah Jay", phone: "5436346" },
+        { id: 11, name: "Test 2", phone: "12345" },
+        { id: 12, name: "Michael Smith", phone: "5436346" },
+        { id: 13, name: "Stan Smith", phone: " 1234" },
       ])
     );
   },

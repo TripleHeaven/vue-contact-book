@@ -1,8 +1,9 @@
 <template>
-  <div class="contactListContainer">
+  <div class="contactListCont">
     <Contact
-      v-for="contact in contacts"
+      v-for="(contact, index) in contacts"
       v-bind:contact="contact"
+      v-bind:index="index"
       v-bind:id="contact.id"
       @deleteContact="deleteContact"
       :key="contact.id"
@@ -26,4 +27,20 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.contactListCont {
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  overflow-x: hidden;
+  height: 92%;
+}
+.contactListCont::-webkit-scrollbar {
+  width: 7px; /* ширина для вертикального скролла */
+  height: 4px; /* высота для горизонтального скролла */
+}
+.contactListCont::-webkit-scrollbar-thumb {
+  background-color: #0069ed;
+  border-radius: 9em;
+}
+</style>

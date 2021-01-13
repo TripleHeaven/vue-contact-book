@@ -11,6 +11,7 @@
       @deleteField="deleteField"
       @changeField="changeField"
       @addContact="addContact"
+      @alphabetSort="alphabetSort"
       v-bind:contacts="contacts"
     />
   </div>
@@ -24,10 +25,13 @@ export default {
     };
   },
   mounted() {
-    console.log("IM MOUNTED", Date.now());
     this.contacts = JSON.parse(localStorage.contacts);
   },
   methods: {
+    alphabetSort() {
+      this.contacts = this.contacts.sort((a, b) => (a.name > b.name ? 1 : -1));
+      this.contacts = this.contacts.slice(0, this.contacts.length);
+    },
     deleteContact(id) {
       console.log("Returned id: ", id);
       this.contacts = this.contacts.filter((contact) => {
@@ -76,7 +80,7 @@ body {
   margin-right: auto;
   background: #32363e;
   color: #61dafb;
-  font-size: 5em;
+  font-size: 42px;
   font-family: "Roboto", sans-serif;
   p {
     margin: 0;
