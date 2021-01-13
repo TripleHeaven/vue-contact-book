@@ -1,52 +1,65 @@
 <template>
-  <div class="dick">
-    <a href="/ContactsPage">Назад к контактам</a>
-    <!-- {{ this.a }} -->
-    <div class="params">
-      <div v-for="field in fields" :key="field.fieldName" class="oneParam">
-        {{ field.fieldName }}
-        <input
-          type="text"
-          v-bind:value="field.fieldValue"
-          v-bind:id="field.fieldName"
-          disabled
-        />
-
-        <button
-          v-if="!field.isRedactMode"
-          class="tgglredactButton"
-          @click="openRedactMode(field)"
+  <div class="contactDetailWrapper">
+    <div class="contactDetailConatainer">
+      <div class="topButtonsContainer">
+        <a href="/ContactsPage">
+          <button class="backToButton">Назад к контактам</button></a
         >
-          Редактировать
-        </button>
-        <!-- hidden buttons -->
-        <button
-          @click="confirmChange(field)"
-          v-if="field.isRedactMode"
-          class="completeRedact"
-        >
-          Подтвердить изменения
-        </button>
-        <button
-          v-if="field.isRedactMode"
-          @click="cancelChange(field)"
-          class="cancelRedact"
-        >
-          Отменить изменения
-        </button>
-        <button @click="deleteField(field)" class="delField">
-          Удалить поле
+        <button class="cancelLastAction" @click="cancelLastChange()">
+          Отменить последнее действие
         </button>
       </div>
-      <button class="cancelLastAction" @click="cancelLastChange()">
-        Отменить последнее действие
-      </button>
-    </div>
+      <!-- {{ this.a }} -->
 
-    <input id="fieldToAdd" class="addField" type="text" />
-    <div @click="addField()">Добавить поле</div>
-    <input id="fieldtoDelete" class="deleteField" type="text" />
-    <div @click="deleteField()">Удалить поле</div>
+      <div v-for="field in fields" :key="field.fieldName">
+        <div v-if="field.fieldName != `id`" class="paramsWrapper">
+          <div class="parameters">
+            <span v-if="field.fieldName !== `name`" class="parName">
+              {{ field.fieldName }}
+            </span>
+            <input
+              type="text"
+              v-bind:value="field.fieldValue"
+              v-bind:id="field.fieldName"
+              disabled
+            />
+            <button
+              v-if="!field.isRedactMode"
+              class="tgglredactButton"
+              @click="openRedactMode(field)"
+            >
+              Редактировать
+            </button>
+            <!-- hidden buttons -->
+            <button
+              @click="confirmChange(field)"
+              v-if="field.isRedactMode"
+              class="completeRedact"
+            >
+              Подтвердить изменения
+            </button>
+            <button
+              v-if="field.isRedactMode"
+              @click="cancelChange(field)"
+              class="cancelRedact"
+            >
+              Отменить изменения
+            </button>
+            <button
+              v-if="field.fieldName != `name`"
+              @click="deleteField(field)"
+              class="delField"
+            >
+              Удалить поле
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="addingCont">
+        <input id="fieldToAdd" class="addField" type="text" />
+        <button @click="addField()">Добавить поле</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -160,7 +173,7 @@ export default {
         );
         field.fieldValue = document.getElementById(field.fieldName).value;
         document.getElementById(field.fieldName).isRedactMode = false;
-
+        document.getElementById(field.fieldName).disabled = true;
         this.$emit(
           "changeField",
           this.getIdOfCurrentContact(),
@@ -204,10 +217,69 @@ export default {
   display: flex;
   flex-direction: column;
 }
-.dick {
-  width: 700px;
-  height: 200px;
+.contactDetailWrapper {
+  width: 90%;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
   border: solid 2px;
   border-radius: 5px;
+  background: #fff;
+  flex-direction: column;
+}
+.backToButton {
+  background-color: rgb(21, 163, 0);
+}
+.contactDetailConatainer {
+  padding: 30px;
+}
+.cancelLastAction {
+  background: red;
+}
+.topButtonsContainer {
+  display: flex;
+  height: 30px;
+  margin-bottom: 10px;
+}
+#name {
+  font-size: 40px;
+  color: black;
+  font-weight: 600;
+  border: 0;
+}
+.parameters {
+  .parName {
+    font-size: 24px;
+  }
+
+  padding: 2px;
+  button {
+    height: 100%;
+    padding: 5px;
+  }
+  input {
+    width: 250px;
+    border: 1px solid;
+    border-color: rgba(0, 0, 0, 0.3);
+    background: rgb(255, 191, 0);
+    border-radius: 5px;
+  }
+  input:disabled {
+    padding: 0;
+    margin: 0;
+    border: 1px solid;
+    border-color: rgba(0, 0, 0, 0.3);
+    background: none;
+    border-radius: 5px;
+  }
+}
+.addingCont {
+  height: 30px;
+  button {
+    background: #15a300;
+  }
+}
+.delField {
+  background: red;
 }
 </style>

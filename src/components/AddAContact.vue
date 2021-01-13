@@ -44,7 +44,8 @@ export default {
   background-color: #ffffff;
   border-radius: 5px;
   height: 150px;
-  min-width: 150px;
+  width: 200px;
+
   font-family: "Roboto";
   font-size: 16px;
   .formTbs {
@@ -96,6 +97,11 @@ export default {
   }
   button:active {
     transform: scale(0.99);
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .addUserContainer {
+    width: 100%;
   }
 }
 </style>
