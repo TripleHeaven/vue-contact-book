@@ -1,5 +1,6 @@
 <template>
   <div class="contactListCont">
+    <!-- Отображаем список контактов -->
     <Contact
       v-for="(contact, index) in contacts"
       v-bind:contact="contact"

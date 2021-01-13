@@ -4,7 +4,6 @@
       <div class="addContactContainer">
         <AddAContact @addContact="addContact"></AddAContact>
       </div>
-
       <div class="contactListContainer">
         <div class="labelBlock">
           <span>Список контактов</span>
@@ -25,6 +24,7 @@
 <script>
 import AddAContact from "../components/AddAContact.vue";
 import ContactList from "../components/ContactList.vue";
+
 export default {
   name: "PageOne",
   components: { AddAContact, ContactList },
@@ -35,6 +35,7 @@ export default {
     },
   },
   methods: {
+    // Ловим события из дочерних компонентов
     alphabetSort() {
       this.$emit("alphabetSort");
     },

@@ -1,10 +1,12 @@
 <template>
   <div>
     <header>
+      <!-- Шапка видна на всех страницах -->
       <div class="container">
         <p>Книга контактов</p>
       </div>
     </header>
+    <!-- Передаем все необходимые функции для работы с глобальным состоянием contacts -->
     <router-view
       @addField="addField"
       @deleteContact="deleteContact"
@@ -16,6 +18,7 @@
     />
   </div>
 </template>
+
 <script>
 export default {
   name: "Main",
@@ -25,9 +28,11 @@ export default {
     };
   },
   mounted() {
+    // Получаем контакты из localstorage
     this.contacts = JSON.parse(localStorage.contacts);
   },
   methods: {
+    // функции для обработки контактов
     alphabetSort() {
       this.contacts = this.contacts.sort((a, b) => (a.name > b.name ? 1 : -1));
       this.contacts = this.contacts.slice(0, this.contacts.length);
@@ -56,12 +61,14 @@ export default {
     },
   },
   watch: {
+    // любые изменения в контактах заносятся в localStorage
     contacts: function(b) {
       localStorage["contacts"] = JSON.stringify(b);
     },
   },
 };
 </script>
+
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
 header {
@@ -77,10 +84,8 @@ body {
   margin-left: auto;
   margin-right: auto;
   background: #32363e;
-
   font-size: 32px;
   font-family: "Roboto", sans-serif;
-
   p {
     margin: 0;
     display: flex;

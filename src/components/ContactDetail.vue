@@ -9,14 +9,14 @@
           Отменить последнее действие
         </button>
       </div>
-      <!-- {{ this.a }} -->
-
+      <!-- Отображаем поля текущего контакта -->
       <div v-for="field in fields" :key="field.fieldName">
         <div v-if="field.fieldName != `id`" class="paramsWrapper">
           <div class="parameters">
-            <span v-if="field.fieldName !== `name`" class="parName">
+            <!-- Если поле это имя то добавляем отдельный элемент -->
+            <div v-if="field.fieldName !== `name`" class="parName">
               {{ field.fieldName }}
-            </span>
+            </div>
             <input
               type="text"
               v-bind:value="field.fieldValue"
@@ -30,7 +30,7 @@
             >
               Редактировать
             </button>
-            <!-- hidden buttons -->
+            <!-- Кнопки измнеяются в зависимости от входа в режи редактирования -->
             <button
               @click="confirmChange(field)"
               v-if="field.isRedactMode"
@@ -55,6 +55,7 @@
           </div>
         </div>
       </div>
+      <!-- Окно добавления поля -->
       <div class="addingCont">
         <input id="fieldToAdd" class="addField" type="text" />
         <button @click="addField()">Добавить поле</button>
@@ -72,15 +73,21 @@ export default {
   },
   data() {
     return {
+      // Создаем копию контакта
       contact: [],
+      // Создаем пространство вида имя:поле
       fields: [],
+      // Индекс для буфера последнего изменения
       lastChangedIndex: -1,
+      // Тип последнего изменения
       lastAction: "none",
+      // Последнее затронутое поле (имя поля, значение поля)
       changedField: {},
     };
   },
   watch: {
     contacts() {
+      // Получив контакт от родителя, заполняем его в переменные текущего компонента
       this.contact = this.contacts[this.getIdOfCurrentContact()];
       this.fields = [];
       let index = 0;
@@ -88,7 +95,9 @@ export default {
         this.fields.push({
           fieldName: propertyName,
           fieldValue: this.contact[propertyName],
+          // Переменная для входа/выхода из режима редактирования
           isRedactMode: false,
+          // Индекс поля среди всех полей контакта
           fieldIndex: index,
         });
         index += 1;
@@ -96,6 +105,26 @@ export default {
     },
   },
   methods: {
+    // Получить значение текущего контакта в контексте всех контактов
+    getIdOfCurrentContact() {
+      for (let i = 0; i < this.contacts.length; i++) {
+        if (this.contacts[i].id == this.id) {
+          return [i];
+        }
+      }
+    },
+    // Запоминаем последнее действие и заносим копию в буфер
+    rememberLastAction(
+      fieldIndex,
+      action,
+      changedFieldName,
+      changedFieldValue
+    ) {
+      this.lastChangedIndex = fieldIndex;
+      this.lastAction = action;
+      this.changedField.value = changedFieldValue;
+      this.changedField.name = changedFieldName;
+    },
     addField() {
       const add = document
         .getElementById("fieldToAdd")
@@ -117,6 +146,8 @@ export default {
         alert("Данное поле зарезервировано и его нельзя удалить");
       } else if (field.fieldName === "id") {
         alert("Поле Имя нельзя удалить");
+      } else if (field.fieldName === "phone") {
+        alert("Поле Контактный номер нельзя удалить");
       } else if (confirm("Вы действительно хотите удалить это поле?")) {
         this.rememberLastAction(
           field.fieldIndex,
@@ -130,36 +161,20 @@ export default {
           field.fieldName
         );
       }
-      // this.$emit("deleteField", this.getIdOfCurrentContact(), add);
     },
-    getIdOfCurrentContact() {
-      for (let i = 0; i < this.contacts.length; i++) {
-        if (this.contacts[i].id == this.id) {
-          return [i];
-        }
-      }
-    },
+    // Открыть режим редактирования поля
     openRedactMode(field) {
       document.getElementById(field.fieldName).disabled = false;
       field.isRedactMode = true;
     },
+    // Отменить внесение в поле , выйти из режима редактирования
     cancelChange(field) {
       if (confirm("Вы действительно хотите отменить редактирование?")) {
         document.getElementById(field.fieldName).disabled = true;
         field.isRedactMode = false;
       }
     },
-    rememberLastAction(
-      fieldIndex,
-      action,
-      changedFieldName,
-      changedFieldValue
-    ) {
-      this.lastChangedIndex = fieldIndex;
-      this.lastAction = action;
-      this.changedField.value = changedFieldValue;
-      this.changedField.name = changedFieldName;
-    },
+    // Подтвердить изменение после редактирования
     confirmChange(field) {
       if (document.getElementById(field.fieldName).value !== "") {
         this.rememberLastAction(
@@ -168,9 +183,12 @@ export default {
           field.fieldName,
           field.fieldValue
         );
+
         field.fieldValue = document.getElementById(field.fieldName).value;
+
         document.getElementById(field.fieldName).isRedactMode = false;
         document.getElementById(field.fieldName).disabled = true;
+
         this.$emit(
           "changeField",
           this.getIdOfCurrentContact(),
@@ -181,8 +199,10 @@ export default {
         alert("Поле не может быть пустым!");
       }
     },
+
+    // Отменяем последнее действие
     cancelLastChange() {
-      // edit cancel
+      // Возвращаем состояния в зависимости от действия
       if (this.lastAction === "edit") {
         this.$emit(
           "changeField",
@@ -212,10 +232,6 @@ export default {
 </script>
 
 <style lang="scss">
-.params {
-  display: flex;
-  flex-direction: column;
-}
 .contactDetailWrapper {
   width: 90%;
   display: flex;
@@ -240,18 +256,25 @@ export default {
   height: 30px;
   margin-bottom: 10px;
 }
-#name {
-  font-size: 40px;
-  color: black;
-  font-weight: 600;
-  border: 0;
-}
-.parameters {
-  .parName {
-    font-size: 24px;
-  }
 
+.parameters {
+  display: flex;
   padding: 2px;
+  font-family: "Roboto";
+  .parName {
+    min-width: 120px;
+    font-size: 22px;
+    margin-right: 10px;
+    font-weight: 500;
+  }
+  #name {
+    width: 500px;
+    font-size: 40px;
+    color: black;
+    font-weight: 600;
+    border: 0;
+    margin-bottom: 15px;
+  }
   button {
     height: 100%;
     padding: 5px;
@@ -270,6 +293,9 @@ export default {
     border-color: rgba(0, 0, 0, 0.3);
     background: none;
     border-radius: 5px;
+  }
+  .delField {
+    background: red;
   }
 }
 .addingCont {

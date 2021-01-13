@@ -1,4 +1,5 @@
 <template>
+  <!-- Форма для добавления контактов -->
   <div class="addUserContainer">
     <form>
       <div class="formTbs">
@@ -19,6 +20,7 @@ export default {
   name: "AddAContact",
   methods: {
     addContact() {
+      // Проводим минимальную валидацию и в случае успеха отдаем данные родителю
       if (
         document.getElementById("nameForAdd").value.length !== 0 &&
         document.getElementById("phoneForAdd").value.length !== 0
@@ -28,10 +30,10 @@ export default {
           document.getElementById("nameForAdd").value,
           document.getElementById("phoneForAdd").value
         );
+        document.getElementById("nameForAdd").value = "";
+        document.getElementById("phoneForAdd").value = "";
       } else {
         alert("Пожалуйста, заполните все поля!");
-        (document.getElementById("nameForAdd").value = ""),
-          (document.getElementById("phoneForAdd").value = "");
       }
     },
   },
@@ -46,7 +48,6 @@ export default {
   border-radius: 5px;
   height: 150px;
   width: 200px;
-
   font-family: "Roboto";
   font-size: 16px;
   .formTbs {
@@ -60,7 +61,6 @@ export default {
     margin-top: 2px;
     margin-bottom: 2px;
     padding: 0;
-
     height: 25px;
     position: relative;
     left: 0;
